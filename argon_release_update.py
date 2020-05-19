@@ -29,6 +29,8 @@ def getArgonRelease():
         with open(filename, 'wb') as f:
             f.write(res.content)
         print("downloaded")
+    else:
+        os.environ['GITHUB_STOP_NEXT_STEPS'] = "true";
 
     with open('./argon_releases/updated_time.txt', 'w') as f:
             f.write(format(int(time.time())))
