@@ -24,20 +24,24 @@ jobs:
         timeout-minutes: 350
         run: bash ./argon_release_update.sh
       - name: Commit files
+        if: ${{ STOP_NEXT_STEPS != "true" }}
         run: |
           git config --local user.email "argontheme@outlook.com"
           git config --local user.name "argon-theme-release-push"
           git add -A
           git commit -m "Update Argon Release" -a
       - name: 'Push changes'
+        if: ${{ STOP_NEXT_STEPS != "true" }}
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN_ARGON_THEME_RELEASE_PUSH }}
       - name: 'Delete Old Release And Tag'
+        if: ${{ STOP_NEXT_STEPS != "true" }}
         uses: solstice23/action-delete-latest-release@master
         with:
           github_token: ${{ secrets.TOKEN_ARGON_THEME_RELEASE_PUSH }}
       - name: 'Create a Release'
+        if: ${{ STOP_NEXT_STEPS != "true" }}
         uses: elgohr/Github-Release-Action@master
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_ARGON_THEME_RELEASE_PUSH }}
