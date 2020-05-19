@@ -9,6 +9,8 @@ on:
 jobs:
   UpdateArgonReleases:
     runs-on: ubuntu-latest
+    env:
+      STOP_NEXT_STEPS: 'false'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
