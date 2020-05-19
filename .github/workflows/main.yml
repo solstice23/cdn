@@ -27,7 +27,7 @@ jobs:
         timeout-minutes: 3
         run: bash ./argon_release_update.sh
       - name: Commit files
-        if: ${{ env.HAS_NEW_VERSION_UPDATE != 'true' }}
+        if: ${{ env.HAS_NEW_VERSION_UPDATE == 'true' }}
         run: |
           git config --local user.email "argontheme@outlook.com"
           git config --local user.name "argon-theme-release-push"
