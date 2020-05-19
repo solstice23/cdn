@@ -10,7 +10,8 @@ jobs:
   UpdateArgonReleases:
     runs-on: ubuntu-latest
     env:
-      STOP_NEXT_STEPS: 'false'
+      HAS_NEW_VERSION_UPDATE: 'false'
+    timeout-minutes: 3
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,27 +24,27 @@ jobs:
       - name: 'Install requirements'
         run: pip install -r ./argon_release_update_py_requirements.txt
       - name: 'Working'
-        timeout-minutes: 350
+        timeout-minutes: 3
         run: bash ./argon_release_update.sh
       - name: Commit files
-        if: ${{ env.STOP_NEXT_STEPS != 'true' }}
+        if: ${{ env.HAS_NEW_VERSION_UPDATE != 'true' }}
         run: |
           git config --local user.email "argontheme@outlook.com"
           git config --local user.name "argon-theme-release-push"
           git add -A
           git commit -m "Update Argon Release" -a
       - name: 'Push changes'
-        if: ${{ env.STOP_NEXT_STEPS != 'true' }}
+        if: ${{ env.HAS_NEW_VERSION_UPDATE == 'true' }}
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN_ARGON_THEME_RELEASE_PUSH }}
       - name: 'Delete Old Release And Tag'
-        if: ${{ env.STOP_NEXT_STEPS != 'true' }}
+        if: ${{ env.HAS_NEW_VERSION_UPDATE == 'true' }}
         uses: solstice23/action-delete-latest-release@master
         with:
           github_token: ${{ secrets.TOKEN_ARGON_THEME_RELEASE_PUSH }}
       - name: 'Create a Release'
-        if: ${{ env.STOP_NEXT_STEPS != 'true' }}
+        if: ${{ env.HAS_NEW_VW_VERSION_UPDATE == 'true' }}
         uses: elgohr/Github-Release-Action@master
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_ARGON_THEME_RELEASE_PUSH }}
