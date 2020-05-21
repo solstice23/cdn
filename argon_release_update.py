@@ -29,9 +29,9 @@ def getArgonRelease():
         with open(filename, 'wb') as f:
             f.write(res.content)
         print("downloaded")
-        print(f"::set-output name=hasNewVersionUpdate::{true}")
+        print("::set-output name=hasNewVersionUpdate::true")
     else:
-        print(f"::set-output name=hasNewVersionUpdate::{false}")
+        print("::set-output name=hasNewVersionUpdate::false")
 
     with open('./argon_releases/updated_time.txt', 'w') as f:
             f.write(format(int(time.time())))
